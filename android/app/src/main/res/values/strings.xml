@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Irrigation Controller</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_ics__dashboard">ICS_Dashboard</string>
+</resources>

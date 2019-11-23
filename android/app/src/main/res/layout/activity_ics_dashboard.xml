@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ICSDashboard"
+    android:background="#2196f3">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:text="IIT MADRAS, CHENNAI"
+        android:layout_margin="10dp"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="#2196f3"
+        android:padding="5dp"
+        android:gravity="center"
+        android:layout_gravity="center"/>
+
+    <LinearLayout
+        android:id="@+id/db_LL_moisture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:background="#FFFFFF"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/db_moisture_img"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SOIL MOISTURE"
+                android:padding="5dp"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#2196f3"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/db_moisture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:textSize="16sp"
+                android:textColor="#29b6f6"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/db_LL_temperature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:background="#FFFFFF"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/db_temperature_img"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LOCAL TEMPERATURE"
+                android:padding="5dp"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#2196f3"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/db_temperature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:textSize="16sp"
+                android:textColor="#29b6f6"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/db_LL_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="IRRIGATION CONTROLLER STATUS"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#2196f3"
+            android:gravity="center"/>
+
+        <ImageView
+            android:id="@+id/db_ic_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/db_switch_off_img"/>
+
+        <TextView
+            android:id="@+id/db_ic_status_text"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="OFF"
+            android:textSize="14sp"
+            android:layout_marginTop="5dp"
+            android:textColor="#FF00"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/db_LL_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="IRRIGATION CONTROLLER SWITCH"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#2196f3"
+            android:gravity="center"/>
+
+        <ImageButton
+            android:id="@+id/db_user_ic_status"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:background="@drawable/db_status_off_img"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/db_user_ic_status_text"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="OFF"
+            android:textSize="14sp"
+            android:layout_marginTop="5dp"
+            android:textColor="#FF00"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/db_update"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#2196f3"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:text="UPDATE"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:background="#FFFFFF"/>
+
+        <Button
+            android:id="@+id/db_single_forecast"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#2196f3"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:text="CHECK FORECAST"
+            android:background="#FFFFFF"/>
+
+    </LinearLayout>
+
+</LinearLayout>
+
+</ScrollView>
