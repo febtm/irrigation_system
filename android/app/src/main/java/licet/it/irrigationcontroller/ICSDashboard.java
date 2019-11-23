@@ -28,15 +28,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 
 public class ICSDashboard extends AppCompatActivity {
 
@@ -49,7 +43,7 @@ public class ICSDashboard extends AppCompatActivity {
 
     private static int USER_VAL, NO_OF_VAL;
 
-    private ProgressDialog progressDialog, pDialog;
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -318,6 +312,59 @@ public class ICSDashboard extends AppCompatActivity {
     }
 
 
+    class PostThingspeak extends AsyncTask<Void, Void, String> {
+
+        protected void onPreExecute() {}
+
+        protected String doInBackground(Void... urls) {
+
+            try {
+
+                SharedPreferences GET = getSharedPreferences("ICS", 0);
+                USER_VAL = GET.getInt("USER_VAL", 0);
+
+                URL url = new URL("https://api.thingspeak.com/update?api_key=6EBU1IYO52MLMEZH&field4="+USER_VAL);
+
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+                try {
+
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String line;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        stringBuilder.append(line).append("\n");
+                    }
+                    bufferedReader.close();
+                    return stringBuilder.toString();
+
+                }
+
+                finally{
+                    urlConnection.disconnect();
+                }
+            }
+            catch(Exception e) {
+                Log.e("ERROR", e.getMessage(), e);
+                return null;
+            }
+        }
+
+        protected void onPostExecute(String response) {
+
+            if(response != null) {
+
+                if(USER_VAL == 2412)
+                    Toast.makeText(ICSDashboard.this, "Value OFF has been posted !", Toast.LENGTH_LONG).show();
+
+                else if(USER_VAL == 2512)
+                    Toast.makeText(ICSDashboard.this, "Value ON has been posted !", Toast.LENGTH_LONG).show();
+            } else
+                Toast.makeText(ICSDashboard.this, "Post Error !", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
 
     class GetThingSpeak extends AsyncTask<Void, Void, String> {
 
@@ -400,160 +447,6 @@ public class ICSDashboard extends AppCompatActivity {
         }
     }
 
-
-    class PostThingspeak extends AsyncTask<Void, Void, String> {
-
-        protected void onPreExecute() {
-
-            pDialog = new ProgressDialog(ICSDashboard.this);
-            pDialog.setMessage("Posting Data ... ");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
-            pDialog.show();
-        }
-
-        protected String doInBackground(Void... urls) {
-
-            try {
-
-                SharedPreferences GET = getSharedPreferences("ICS", 0);
-                USER_VAL = GET.getInt("USER_VAL", 0);
-
-                URL url = new URL("https://api.thingspeak.com/update?api_key=6EBU1IYO52MLMEZH&field4="+USER_VAL);
-
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-                try {
-
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                    StringBuilder stringBuilder = new StringBuilder();
-                    String line;
-                    while ((line = bufferedReader.readLine()) != null) {
-                        stringBuilder.append(line).append("\n");
-                    }
-                    bufferedReader.close();
-                    return stringBuilder.toString();
-
-                }
-
-                finally{
-                    urlConnection.disconnect();
-                }
-            }
-            catch(Exception e) {
-                Log.e("ERROR", e.getMessage(), e);
-                return null;
-            }
-        }
-
-        protected void onPostExecute(String response) {
-
-            if(response != null) {
-
-            PostBackgroundTask postBackgroundTask = new PostBackgroundTask(ICSDashboard.this);
-            postBackgroundTask.execute();
-
-            } else
-                Toast.makeText(ICSDashboard.this, "Thingspeak Post Error !", Toast.LENGTH_LONG).show();
-        }
-    }
-
-
-
-    private class PostBackgroundTask extends AsyncTask<String, Void, String> {
-
-        Context ctx;
-
-        PostBackgroundTask(Context ctx) {
-            this.ctx = ctx;
-        }
-
-        @Override
-        public void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-                try {
-
-                    URL url = new URL("http://www.febulous.net16.net/ics/android_post.php");
-                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                    httpURLConnection.setRequestMethod("POST");
-                    httpURLConnection.setDoOutput(true);
-                    OutputStream OS = httpURLConnection.getOutputStream();
-                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS, "UTF-8"));
-
-
-                    String data = URLEncoder.encode("user_val", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(USER_VAL), "UTF-8");
-
-                    bufferedWriter.write(data);
-                    bufferedWriter.flush();
-                    bufferedWriter.close();
-                    OS.close();
-                    InputStream IS = httpURLConnection.getInputStream();
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(IS,"iso-8859-1"));
-                    String response = "";
-                    String line;
-
-                    while((line = bufferedReader.readLine())!=null)  {
-                        response += line;
-                    }
-                    bufferedReader.close();
-                    IS.close();
-                    httpURLConnection.disconnect();
-                    return response;
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-
-            switch(result){
-
-                case "Posting Successful !":
-
-                    if(USER_VAL == 2412)
-                        Toast.makeText(ICSDashboard.this, "Value OFF has been posted !", Toast.LENGTH_LONG).show();
-
-                    else if(USER_VAL == 2512)
-                        Toast.makeText(ICSDashboard.this, "Value ON has been posted !", Toast.LENGTH_LONG).show();
-
-                    pDialog.dismiss();
-
-                    break;
-
-                case "Posting Failed !":
-
-                    Toast.makeText(ctx, result, Toast.LENGTH_LONG).show();
-                    pDialog.dismiss();
-
-                    break;
-
-                default:
-
-                    Toast.makeText(ctx, result, Toast.LENGTH_LONG).show();
-                    pDialog.dismiss();
-
-                    break;
-
-            }
-
-        }
-
-    }
 
     private boolean isConnectingToInternet() {
 

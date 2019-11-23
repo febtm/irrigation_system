@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
-        android:text="IIT MADRAS, CHENNAI"
+        android:text="LOYOLA COLLEGE, CHENNAI"
         android:layout_margin="10dp"
         android:textStyle="bold"
         android:textSize="16sp"
